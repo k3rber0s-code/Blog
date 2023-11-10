@@ -7,9 +7,7 @@ console.log(
 // Get arguments passed on command line
 const userArgs = process.argv.slice(2);
 
-const Book = require("./models/post");
-
-const books = [];
+const Post = require("./models/post_model");
 
 
 const mongoose = require("mongoose");
@@ -23,7 +21,7 @@ async function main() {
     console.log("Debug: About to connect");
     await mongoose.connect(mongoDB);
     console.log("Debug: Should be connected?");
-    await createBooks();
+    await createPosts();
     console.log("Debug: Closing mongoose");
     mongoose.connection.close();
 }
@@ -38,14 +36,13 @@ async function postCreate(index, title, body) {
         body: body
     };
 
-    const book = new Book(postDetail);
-    await book.save();
-    books[index] = book;
-    console.log(`Added book: ${title}`);
+    const post = new Post(postDetail);
+    await post.save();
+    console.log(`Added post: ${title}`);
 }
 
 
-async function createBooks() {
+async function createPosts() {
     console.log("Adding Posts");
     await Promise.all([
         postCreate(0,
