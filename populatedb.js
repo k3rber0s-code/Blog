@@ -46,13 +46,21 @@ async function createPosts() {
     console.log("Adding Posts");
     await Promise.all([
         postCreate(0,
-            "The Name of the Wind",
-            "I have stolen princesses back from sleeping barrow kings. I burned down the town of Trebon. I have spent the night with Felurian and left with both my sanity and my life."
-        ),
-        postCreate(1,
-            "The Slow Regard of Silent Things",
-            "Deep below the University, there is a dark place. Few people know of it: a broken web of ancient passageways and abandoned rooms."
-        ),
+            "Hummus",
+            "# Ingredients\n" +
+            "- 260 g chickpeas (1 can)\n" +
+            "- 30 g lemon juice (can vary as the lemons can be more or less acidic)\n" +
+            "- 60 g tahini\n" +
+            "- 60 g olive oil\n" +
+            "- 1 garlic clove (can be substituted for garlic powder/granules)\n" +
+            "- 2 ice cubes\n" +
+            "- 30-50 g water\n" +
+            "- 1/2 tsp cumin\n" +
+            "- salt (about 1/3 tsp) and pepper to taste\n" +
+            "# Instructions\n" +
+            "1. Drain the chickpeas, mince the garlic and add it to blender/food processor with all the other ingredients. You can start with lower amounts of water and/or oil and add until you are satisfied with the consistency. To avoid a strong taste of garlic, put it to the food processor at first with the lemon juice and let sit for a couple of minutes. \n" +
+            "2. Blend everything together until smooth. Serve with more olive oil and tahini on top."
+        )
     ]);
 }
 

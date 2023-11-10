@@ -1,0 +1,18 @@
+extends layout
+
+block content
+    h1= title
+
+    form(method='POST' action='')
+        div.form-group
+            label(for='title') Title:
+            input#title.form-control(type='text', placeholder='Name of post' name='title' required='true' value=(undefined===post ? '' : post.title) )
+        div.form-group
+            label(for='body') Recipe:
+            textarea#body.form-control(type='textarea', placeholder='Recipe summary' name='body' required='true') #{undefined===post ? '' : post.body}
+        button.btn.btn-primary(type='submit') Submit
+
+    if errors
+        ul
+            for error in errors
+                li!= error.msg

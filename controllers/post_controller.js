@@ -1,5 +1,7 @@
 const Post = require("../models/post_model");
 const asyncHandler = require("express-async-handler");
+const { body, validationResult } = require("express-validator");
+
 
 exports.index = asyncHandler(async (req, res, next) => {
     res.send("NOT IMPLEMENTED: Site Home Page");
@@ -22,15 +24,50 @@ exports.post_detail = asyncHandler(async (req, res, next) => {
         err.status = 404;
         return next(err);
     }
-    res.render("post_detail", {title: postDetail.title, body: postDetail.body})
+    const md = require('markdown-it')();
+    const html_body = md.render(postDetail.body)
+    res.render("post_detail", {title: postDetail.title, body: html_body})
 });
 
 // Display post create form on GET.
 exports.post_create_get = asyncHandler(async (req, res, next) => {
-    res.send("NOT IMPLEMENTED: Post create GET");
+    res.render("post_form", {title: "Create post"});
 });
 
 // Handle post create on POST.
-exports.post_create_post = asyncHandler(async (req, res, next) => {
-    res.send("NOT IMPLEMENTED: Post create POST");
-});
+exports.post_create_post = [
+    body("title", "Title must not be empty.")
+        .trim()
+        .isLength({ min: 1 })
+        .escape(),
+    body("body", "Body must not be empty.")
+        .trim()
+        .isLength({ min: 1 })
+        .escape(),
+
+    asyncHandler(async (req, res, next) => {
+        // Extract the validation errors from a request.
+        const errors = validationResult(req);
+        console.log("Errors extracted: ", errors)
+
+        // Create a Post object with escaped and trimmed data.
+        const post = new Post({
+            title: req.body.title,
+            body: req.body.body
+        });
+
+        if (!errors.isEmpty()) {
+            console.log("There have been errors.")
+            // There are errors. Render form again with sanitized values/error messages.
+            res.render("post_form", {
+                title: "Create post",
+                errors: errors.array()
+            });
+        } else {
+            console.log("All ok, saving...")
+            // Data from form is valid. Save post.
+            await post.save();
+            res.redirect("/" + post.url)
+        }
+    }),
+];
