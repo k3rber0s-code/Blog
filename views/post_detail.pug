@@ -4,3 +4,9 @@ block content
     h1=title
 
     div !{body}
+    if isAuthenticated
+        hr
+        p
+            a(href=post_url + '/delete') Delete Post
+        p
+            a(href=post_url + '/update') Update Post

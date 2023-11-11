@@ -14,15 +14,13 @@ const secured = (req, res, next) => {
 /* GET posts listing. */
 router.get('/', post_controller.post_list);
 
-/* GET post detail */
-router.get('/post/:id', post_controller.post_detail);
 
 
 
 /* GET post create form */
-router.get('/create', secured, post_controller.post_create_get);
+router.get('/post/create', secured, post_controller.post_create_get);
 /* POST form data */
-router.post('/create', post_controller.post_create_post);
+router.post('/post/create', post_controller.post_create_post);
 
 /* GET delete post */
 router.get('/post/:id/delete', secured, post_controller.post_delete_get);
@@ -34,4 +32,6 @@ router.get('/post/:id/update', secured, post_controller.post_update_get);
 /* POST update post */
 router.post('/post/:id/update', post_controller.post_update_post);
 
+/* GET post detail */
+router.get('/post/:id', post_controller.post_detail);
 module.exports = router;

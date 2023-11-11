@@ -26,7 +26,7 @@ exports.post_detail = asyncHandler(async (req, res, next) => {
     }
     const md = require('markdown-it')();
     const html_body = md.render(postDetail.body)
-    res.render("post_detail", {title: postDetail.title, body: html_body})
+    res.render("post_detail", {title: postDetail.title, body: html_body, post_url: "/" + postDetail.url})
 });
 
 // Display post create form on GET.
@@ -79,9 +79,65 @@ exports.post_delete_get = asyncHandler(async (req, res, next) => {
 exports.post_delete_post = asyncHandler(async (req, res, next) => {
     res.send("NOT IMPLEMENTED: Post delete POST");
 });
+
 exports.post_update_get = asyncHandler(async (req, res, next) => {
-    res.send("NOT IMPLEMENTED: Post update GET");
+    // Get book, authors and genres for form.
+    const post = await Promise.resolve(
+        Post.findById(req.params.id).exec()
+    );
+
+    if (post === null) {
+        // No results.
+        const err = new Error("Post not found");
+        err.status = 404;
+        return next(err);
+    }
+
+
+    res.render("post_form", {
+        title: "Update Post",
+        post: post,
+    });
 });
-exports.post_update_post = asyncHandler(async (req, res, next) => {
-    res.send("NOT IMPLEMENTED: Post update POST");
-});
+
+exports.post_update_post = [
+    // Validate and sanitize fields.
+    body("title", "Title must not be empty.")
+        .trim()
+        .isLength({ min: 1 })
+        .escape(),
+    body("body", "Body must not be empty.")
+        .trim()
+        .isLength({ min: 1 })
+        .escape(),
+
+    // Process request after validation and sanitization.
+    asyncHandler(async (req, res, next) => {
+        // Extract the validation errors from a request.
+        const errors = validationResult(req);
+
+        // Create a Post object with escaped/trimmed data and old id.
+        const post = new Post({
+            title: req.body.title,
+            body: req.body.body,
+            _id: req.params.id, // This is required, or a new ID will be assigned!
+        });
+
+        if (!errors.isEmpty()) {
+            // There are errors. Render form again with sanitized values/error messages.
+
+            res.render("post_form", {
+                title: "Update Post",
+                post: post,
+                errors: errors.array(),
+            });
+        } else {
+            // Data from form is valid. Update the record.
+            const updatedPost = await Post.findByIdAndUpdate(req.params.id, post, {});
+            console.log(updatedPost)
+            // Redirect to book detail page.
+            res.redirect("/" + updatedPost.url);
+        }
+    })
+];
+

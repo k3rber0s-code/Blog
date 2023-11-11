@@ -11,8 +11,6 @@ router.get('/', async(req, res, next) => {
   );
   res.render('index', { title: 'Ema Tomanova', post_count: numPosts });
 });
-// router.get('/', function (req, res){
-//   res.redirect('/posts')
-// })
+
 
 module.exports = router;
