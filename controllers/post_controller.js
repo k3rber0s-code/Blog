@@ -74,14 +74,31 @@ exports.post_create_post = [
 //
 
 exports.post_delete_get = asyncHandler(async (req, res, next) => {
-    res.send("NOT IMPLEMENTED: Post delete GET");
+    const post = await Promise.resolve(
+        Post.findById(req.params.id).exec()
+    );
+
+    if (post === null) {
+        // No results.
+        const err = new Error("Post not found");
+        err.status = 404;
+        return next(err);
+    }
+    res.render("post_delete", {
+        title: "Delete post",
+        post: post
+    });
 });
+
 exports.post_delete_post = asyncHandler(async (req, res, next) => {
-    res.send("NOT IMPLEMENTED: Post delete POST");
+    const post = await Promise.resolve(
+        Post.findById(req.params.id).exec()
+    );
+    await Post.findByIdAndDelete({_id: req.body.postid.toString().trim()});
+    res.redirect("/posts");
 });
 
 exports.post_update_get = asyncHandler(async (req, res, next) => {
-    // Get book, authors and genres for form.
     const post = await Promise.resolve(
         Post.findById(req.params.id).exec()
     );

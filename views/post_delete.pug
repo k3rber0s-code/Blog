@@ -1,0 +1,13 @@
+extends layout
+
+block content
+    h1 #{title}: #{post.title}
+
+
+    p Do you really want to delete this post?
+
+    form(method='POST' action='')
+        div.form-group
+            input#postid.form-control(type='hidden',name='postid', required='true', value=post._id )
+
+        button.btn.btn-primary(type='submit') Delete
