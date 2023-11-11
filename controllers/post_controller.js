@@ -71,3 +71,17 @@ exports.post_create_post = [
         }
     }),
 ];
+//
+
+exports.post_delete_get = asyncHandler(async (req, res, next) => {
+    res.send("NOT IMPLEMENTED: Post delete GET");
+});
+exports.post_delete_post = asyncHandler(async (req, res, next) => {
+    res.send("NOT IMPLEMENTED: Post delete POST");
+});
+exports.post_update_get = asyncHandler(async (req, res, next) => {
+    res.send("NOT IMPLEMENTED: Post update GET");
+});
+exports.post_update_post = asyncHandler(async (req, res, next) => {
+    res.send("NOT IMPLEMENTED: Post update POST");
+});

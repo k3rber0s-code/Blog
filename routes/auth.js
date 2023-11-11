@@ -3,6 +3,7 @@ const router = express.Router();
 const passport = require("passport");
 const querystring = require("querystring");
 
+/* GET login page and connect through Auth0 */
 router.get(
     "/login",
     passport.authenticate("auth0", {
@@ -13,6 +14,7 @@ router.get(
     }
 );
 
+/* GET callback function */ // TODO: not working with logout?
 router.get("/callback", (req, res, next) => {
     passport.authenticate("auth0", (err, user, info) => {
         if (err) {
@@ -32,6 +34,7 @@ router.get("/callback", (req, res, next) => {
     })(req, res, next);
 });
 
+/* GET logout of profile */
 router.get("/logout", (req, res) => {
     req.logOut();
 
@@ -58,3 +61,5 @@ router.get("/logout", (req, res) => {
     res.redirect(logoutURL);
 });
 module.exports = router;
+
+// https://auth0.com/blog/create-a-simple-and-secure-node-express-app/
