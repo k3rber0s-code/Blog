@@ -1,12 +1,16 @@
 #!/usr/bin/env node
+/**
+ * Loading .env
+ */
+require('dotenv').config();
 
 /**
  * Module dependencies.
  */
-
 var app = require('../app');
 var debug = require('debug')('simpleblog:server');
 var http = require('http');
+
 
 /**
  * Set up the database.
@@ -22,7 +26,6 @@ async function main() {
   await mongoose.connect(mongoDB);
 }
 
-//const Post = require("../models/post");
 
 /**
  * Get port from environment and store in Express.
