@@ -4,12 +4,9 @@ const Post = require("../models/post_model");
 
 /* GET home page. */
 router.get('/', async(req, res, next) => {
-  const
-    numPosts
-  = await Promise.resolve(
-    Post.countDocuments({}).exec()
-  );
-  res.render('index', { title: 'Ema Tomanova', post_count: numPosts });
+  const allPosts = await Promise.resolve(Post.find({})
+      .exec());
+  res.render('index', { title: 'Welcome!', posts: allPosts });
 });
 
 

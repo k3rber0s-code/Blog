@@ -1,10 +1,11 @@
 extends layout
 
 block content
-    h1=title
-
-    ul
-        each book in book_list
-            li
-                a(href=book.url) #{book.title}
+    div.posts
+        h1=title
+    div.posts_body
+        ul
+            each book in book_list
+                li
+                    a(href=book.url) #{book.title}
 

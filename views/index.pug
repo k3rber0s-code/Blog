@@ -1,9 +1,15 @@
 extends layout
 
 block content
-  h1= title
-  p Welcome to my blog where I share all my recipes.
+  div.welcome
+    h1.welcome_title= title
+    p.welcome_body This is a blog where I share my recipes.
 
-  ul
-    li #[strong Posts:] !{post_count}
+  section.articles
+    h2.articles__heading Latest Posts
 
+    ul.article-ul
+      each post in posts
+        li
+          a(href=post.url)
+            span= post.title
