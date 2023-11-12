@@ -9,31 +9,13 @@ html(lang='en')
     title= locals.title
     meta(name="description", content=locals.description)
     link(rel="stylesheet", href="stylesheets/style.css")
-    script(type="text/javascript", defer, src="/js/script.js")
+    script(type="text/javascript", defer, src="javascripts/script.js")
 
 
   body
-    //include ../partials/search.ejs
+    include partials/search
     div
       include partials/header
       main.main
         block content
       //include ../partials/footer.ejs
-  //body
-  //  div(class='container-fluid')
-  //    div(class='row')
-  //      div(class='col-sm-2')
-  //        block sidebar
-  //          ul(class='sidebar-nav')
-  //            li
-  //              a(href='/') Home
-  //            li
-  //              a(href='/posts') All posts
-  //            li
-  //              if isAuthenticated
-  //                a(href='/posts/post/create') Create new post
-  //              else
-  //                a(href='/login') Login
-  //
-  //      div(class='col-sm-10')
-  //        block content
