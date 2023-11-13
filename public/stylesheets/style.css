@@ -54,6 +54,9 @@ textarea {
   margin: 0 auto;
   padding: 0 10px;
 }
+img {
+  max-width: 982px;
+}
 
 .main {
   padding: 20px 0;
@@ -324,4 +327,12 @@ textarea {
   box-shadow: rgba(0, 0, 0, 0.06) 0 2px 4px;
   color: rgba(0, 0, 0, 0.65);
   transform: translateY(0);
+}
+blockquote {
+  margin-top: 10px;
+  margin-bottom: 10px;
+  margin-left: 50px;
+  padding-left: 15px;
+  border-left: 3px solid #ccc;
+  background-color: var(--gray-light);
 }

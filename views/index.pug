@@ -4,12 +4,12 @@ block content
   div.welcome
     h1.welcome_title= title
     p.welcome_body This is a blog where I share my recipes.
+  div.container
+    section.articles
+      h2.articles__heading Latest Posts
 
-  section.articles
-    h2.articles__heading Latest Posts
-
-    ul.article-ul
-      each post in posts
-        li
-          a(href=post.url)
-            span= post.title
+      ul.article-ul
+        each post in posts
+          li
+            a(href=post.url)
+              span= post.title

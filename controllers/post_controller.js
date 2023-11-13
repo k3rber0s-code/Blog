@@ -13,7 +13,7 @@ exports.post_list = asyncHandler(async (req, res, next) => {
     const allPosts = await Promise.resolve(Post.find({})
         .exec());
     console.log("Found: ", allPosts);
-    res.render("posts", { book_list: allPosts, title: "All posts"});
+    res.render("posts", { posts: allPosts, title: "All posts"});
 
 });
 
