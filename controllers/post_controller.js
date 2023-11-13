@@ -1,6 +1,7 @@
 const Post = require("../models/post_model");
 const asyncHandler = require("express-async-handler");
 const { body, validationResult } = require("express-validator");
+const he = require("he");
 
 
 exports.index = asyncHandler(async (req, res, next) => {
@@ -24,8 +25,10 @@ exports.post_detail = asyncHandler(async (req, res, next) => {
         err.status = 404;
         return next(err);
     }
+    console.log(postDetail.body)
     const md = require('markdown-it')();
     const html_body = md.render(postDetail.body)
+    console.log(html_body)
     res.render("post_detail", {title: postDetail.title, body: html_body, post_url: "/" + postDetail.url})
 });
 
@@ -50,10 +53,18 @@ exports.post_create_post = [
         const errors = validationResult(req);
         console.log("Errors extracted: ", errors)
 
+        // console.log(req.body.body)
+        // const TurndownService = require('turndown')
+        // const turndownService = new TurndownService()
+        // const body_md = turndownService.turndown(req.body.body)
+
+        const he = require('he');
+        const body_unescaped = he.unescape(req.body.body);
+
         // Create a Post object with escaped and trimmed data.
         const post = new Post({
             title: req.body.title,
-            body: req.body.body
+            body: body_unescaped
         });
 
         if (!errors.isEmpty()) {
@@ -64,6 +75,7 @@ exports.post_create_post = [
                 errors: errors.array()
             });
         } else {
+            console.log(post)
             console.log("All ok, saving...")
             // Data from form is valid. Save post.
             await post.save();
@@ -133,10 +145,13 @@ exports.post_update_post = [
         // Extract the validation errors from a request.
         const errors = validationResult(req);
 
+        const he = require('he');
+        const body_unescaped = he.unescape(req.body.body);
+
         // Create a Post object with escaped/trimmed data and old id.
         const post = new Post({
             title: req.body.title,
-            body: req.body.body,
+            body: body_unescaped,
             _id: req.params.id, // This is required, or a new ID will be assigned!
         });
 
