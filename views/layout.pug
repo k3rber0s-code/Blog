@@ -8,7 +8,7 @@ html(lang='en')
     meta(name="viewport", content="width=device-width, initial-scale=1.0")
     title= locals.title
     meta(name="description", content=locals.description)
-    link(rel="stylesheet", href="stylesheets/style.css")
+    link(rel="stylesheet", href="/stylesheets/style.css")
     script(type="text/javascript", defer, src="javascripts/script.js")
 
 
@@ -18,4 +18,4 @@ html(lang='en')
       include partials/header
       main.main
         block content
-      //include ../partials/footer.ejs
+      include partials/footer
