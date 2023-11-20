@@ -4,6 +4,12 @@ block content
     div.container
         h1.post_detail=title
 
+        p
+            strong Tags:
+            each val, index in tags
+                a(href=(val.url)) ##{val.name}
+                if index < tags.length - 1
+                    | ,
         div.post_detail_body !{body}
         if isAuthenticated
             hr

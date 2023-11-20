@@ -35,3 +35,18 @@ router.post('/post/:id/update', post_controller.post_update_post);
 /* GET post detail */
 router.get('/post/:id', post_controller.post_detail);
 module.exports = router;
+
+
+/* TAGS */
+
+/* GET create new tag form */
+router.get('/tag/create', post_controller.tag_create_get);
+module.exports = router;
+
+/* POST create new tag form */
+router.post('/tag/create', post_controller.tag_create_post);
+module.exports = router;
+
+/* GET all posts by tag */
+router.get('/tag/:id', post_controller.tag_detail);
+module.exports = router;
