@@ -11,7 +11,7 @@ exports.index = asyncHandler(async (req, res, next) => {
 
 // Display list of all posts.
 exports.post_list = asyncHandler(async (req, res, next) => {
-    const allPosts = await Promise.resolve(Post.find({})
+    const allPosts = await Promise.resolve(Post.find({}).sort([['creationDate', -1]])
         .exec());
     console.log("Found: ", allPosts);
     res.render("posts", { posts: allPosts, title: "All posts"});
@@ -26,10 +26,11 @@ exports.post_detail = asyncHandler(async (req, res, next) => {
         err.status = 404;
         return next(err);
     }
-    console.log(postDetail.body)
+    console.log(postDetail)
+    //console.log(postDetail.body)
     const md = require('markdown-it')();
     const html_body = md.render(postDetail.body)
-    console.log(html_body)
+    //console.log(html_body)
     res.render("post_detail", {title: postDetail.title, body: html_body, post_url: "/" + postDetail.url, tags: postDetail.tag})
 });
 
@@ -191,6 +192,7 @@ exports.post_update_post = [
             title: req.body.title,
             body: body_unescaped,
             tag: req.body.tag,
+            updatedAt: Date.now(),
             _id: req.params.id, // This is required, or a new ID will be assigned!
         });
 
@@ -273,7 +275,7 @@ exports.tag_detail = asyncHandler(async (req, res, next) => {
     // Get details of genre and all associated books (in parallel)
     const [tag, postsByTag] = await Promise.all([
         Tag.findById(req.params.id).exec(),
-        Post.find({ tag: req.params.id }, "title").exec(),
+        Post.find({ tag: req.params.id }, "title creationDate").sort([['creationDate', -1]]).exec(),
     ]);
     if (tag === null) {
         // No results.

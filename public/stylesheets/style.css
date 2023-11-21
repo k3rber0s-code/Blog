@@ -342,13 +342,13 @@ blockquote {
 }
 
 .category{
-  border-radius: 25px;
+  border-radius: 15px;
   background: var(--gray-light);
   padding: 3px;
   font-size:12px;
 }
 .category_detail{
-  border-radius: 25px;
+  border-radius: 5px;
   background: var(--gray-light);
   padding: 5px;
   width: auto;
