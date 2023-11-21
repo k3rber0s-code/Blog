@@ -73,6 +73,13 @@ app.set('view engine', 'pug');
 /**
  *  Middleware
  */
+// Set up rate limiter: maximum of twenty requests per minute
+const RateLimit = require("express-rate-limit");
+const limiter = RateLimit({
+    windowMs: 1 * 60 * 1000, // 1 minute
+    max: 20,
+});
+app.use(limiter); // Apply rate limiter to all requests
 app.use(helmet());
 app.disable('cross-origin-embedder-policy');
 app.use(logger('dev'));
