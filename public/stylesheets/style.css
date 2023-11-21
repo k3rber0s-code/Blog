@@ -29,6 +29,9 @@ body {
 a {
   color: var(--gray);
 }
+a:link {
+  text-decoration: none;
+}
 h1 { font-size: var(--font-size-xl); }
 h2 { font-size: var(--font-size-lg); }
 h3 { font-size: var(--font-size-md); }
@@ -336,4 +339,20 @@ blockquote {
   padding-left: 15px;
   border-left: 3px solid #ccc;
   background-color: var(--gray-light);
+}
+
+.category{
+  border-radius: 25px;
+  background: var(--gray-light);
+  padding: 3px;
+  font-size:12px;
+}
+.category_detail{
+  border-radius: 25px;
+  background: var(--gray-light);
+  padding: 5px;
+  width: auto;
+  align-content: center;
+  align-items: center;
+  text-align: center;
 }

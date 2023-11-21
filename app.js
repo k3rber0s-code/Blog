@@ -7,14 +7,17 @@ const logger = require('morgan');
 const expressSession = require("express-session");
 const passport = require("passport");
 const Auth0Strategy = require("passport-auth0");
+const compression = require("compression");
+const helmet = require("helmet");
+
 
 /* Importing routes */
 const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
 const postsRouter = require('./routes/posts');
 const authRouter = require("./routes/auth");
-const aboutRouter = require("./routes/about")
-const searchRouter = require("./routes/search")
+const aboutRouter = require("./routes/about");
+const searchRouter = require("./routes/search");
 
 /**
  * Creating the main app
@@ -70,10 +73,13 @@ app.set('view engine', 'pug');
 /**
  *  Middleware
  */
+app.use(helmet());
+app.disable('cross-origin-embedder-policy');
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
+app.use(compression()); // Compress all routes
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use(expressSession(session));
