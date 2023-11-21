@@ -1,4 +1,4 @@
-
+/* Importing packages */
 const createError = require('http-errors');
 const express = require('express');
 const path = require('path');
@@ -8,12 +8,18 @@ const expressSession = require("express-session");
 const passport = require("passport");
 const Auth0Strategy = require("passport-auth0");
 
+/* Importing routes */
 const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
 const postsRouter = require('./routes/posts');
 const authRouter = require("./routes/auth");
 const aboutRouter = require("./routes/about")
 const searchRouter = require("./routes/search")
+
+/**
+ * Creating the main app
+ * @type {*|Express}
+ */
 const app = express();
 
 /**
@@ -26,6 +32,7 @@ const session = {
     resave: false,
     saveUninitialized: false
 };
+
 // if (app.get("env") === "production") {
 //     // Serve secure cookies, requires HTTPS
 //     session.cookie.secure = true;
@@ -59,6 +66,10 @@ const strategy = new Auth0Strategy(
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
 
+
+/**
+ *  Middleware
+ */
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -67,6 +78,10 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use(expressSession(session));
 
+
+/**
+ * Authorization
+ */
 passport.use(strategy);
 app.use(passport.initialize());
 app.use(passport.session());
@@ -84,19 +99,27 @@ app.use((req, res, next) => {
     next();
 });
 
-// routes
+/**
+ * Set routes
+ */
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/posts', postsRouter);
 app.use('/about', aboutRouter);
 app.use('/search', searchRouter);
 app.use("/", authRouter);
-// catch 404 and forward to error handler
+
+
+/**
+ * catch 404 and forward to error handler
+ */
 app.use(function(req, res, next) {
   next(createError(404));
 });
 
-// error handler
+/**
+ * error handler
+  */
 app.use(function(err, req, res, next) {
   // set locals, only providing error in development
   res.locals.message = err.message;
