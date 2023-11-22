@@ -11,10 +11,5 @@ block content
                     li
                         a(href=post.url)
                             span= post.title
-                            span.article-list__date= post.creationDate.toDateString()
-    //div.posts_body
-    //    ul
-    //        each book in book_list
-    //            li
-    //                a(href=book.url) #{book.title}
-    //
+                            span.article-list__date= post.createdAt.toDateString()
+

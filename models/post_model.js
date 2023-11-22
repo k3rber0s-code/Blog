@@ -6,8 +6,6 @@ const postSchema = new mongoose.Schema({
     body: String,
     author: String,
     tag: [{type: Schema.Types.ObjectId, ref: "Tag"}],
-    creationDate: {type: Date, immutable: true, default: Date.now},
-    updatedAt: {type: Date, default: Date.now},
     comments: [{body: String, name: String, date: Date}],
     hidden: Boolean,
     meta: {

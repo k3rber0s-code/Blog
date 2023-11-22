@@ -11,7 +11,7 @@ exports.index = asyncHandler(async (req, res, next) => {
 
 // Display list of all posts.
 exports.post_list = asyncHandler(async (req, res, next) => {
-    const allPosts = await Promise.resolve(Post.find({}).sort([['creationDate', -1]])
+    const allPosts = await Promise.resolve(Post.find({}).sort([['createdAt', -1]])
         .exec());
     console.log("Found: ", allPosts);
     res.render("posts", { posts: allPosts, title: "All posts"});
@@ -275,7 +275,7 @@ exports.tag_detail = asyncHandler(async (req, res, next) => {
     // Get details of genre and all associated books (in parallel)
     const [tag, postsByTag] = await Promise.all([
         Tag.findById(req.params.id).exec(),
-        Post.find({ tag: req.params.id }, "title creationDate").sort([['creationDate', -1]]).exec(),
+        Post.find({ tag: req.params.id }, "title createdAt").sort([['createdAt', -1]]).exec(),
     ]);
     if (tag === null) {
         // No results.
